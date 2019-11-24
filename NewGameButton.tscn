@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://LabelsFont.tres" type="DynamicFont" id=1]
+
+[node name="NewGame" type="Button"]
+margin_top = 50.0
+margin_right = 575.0
+margin_bottom = 150.0
+rect_clip_content = true
+focus_mode = 0
+size_flags_horizontal = 15
+size_flags_vertical = 15
+shortcut_in_tooltip = false
+enabled_focus_mode = 0
+flat = true
+align = 2
+
+[node name="Label" type="Label" parent="."]
+margin_right = 550.0
+margin_bottom = 104.0
+custom_fonts/font = ExtResource( 1 )
+text = "New Game"
+align = 2

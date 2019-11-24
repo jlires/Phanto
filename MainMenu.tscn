@@ -1,75 +1,79 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://PhantoFont.tres" type="DynamicFont" id=1]
-[ext_resource path="res://LabelsFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://NewGameButton.tscn" type="PackedScene" id=2]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 1080.0
+margin_bottom = 720.0
+alignment = 1
 
 [node name="Empty" type="Label" parent="VBoxContainer"]
-margin_right = 240.0
+margin_right = 1080.0
 margin_bottom = 14.0
 
-[node name="Title" type="Label" parent="VBoxContainer"]
+[node name="Empty6" type="Label" parent="VBoxContainer"]
 margin_top = 18.0
-margin_right = 240.0
-margin_bottom = 60.0
+margin_right = 1080.0
+margin_bottom = 32.0
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+margin_top = 36.0
+margin_right = 1080.0
+margin_bottom = 241.0
+size_flags_horizontal = 15
+size_flags_vertical = 15
 custom_fonts/font = ExtResource( 1 )
 text = "PHANTO"
 align = 1
 valign = 1
 clip_text = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 64.0
-margin_right = 240.0
-margin_bottom = 132.0
+[node name="Empty2" type="Label" parent="VBoxContainer"]
+margin_top = 245.0
+margin_right = 1080.0
+margin_bottom = 259.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
-margin_right = 12.0
-margin_bottom = 68.0
+[node name="Empty3" type="Label" parent="VBoxContainer"]
+margin_top = 263.0
+margin_right = 1080.0
+margin_bottom = 277.0
 
-[node name="NewGame" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_right = 12.0
-margin_bottom = 20.0
-flat = true
+[node name="Empty4" type="Label" parent="VBoxContainer"]
+margin_top = 281.0
+margin_right = 1080.0
+margin_bottom = 295.0
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/NewGame"]
-margin_right = 87.0
-margin_bottom = 16.0
-custom_fonts/font = ExtResource( 2 )
-text = "New Game"
-align = 2
+[node name="Empty5" type="Label" parent="VBoxContainer"]
+margin_top = 299.0
+margin_right = 1080.0
+margin_bottom = 313.0
 
-[node name="Options" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-editor/display_folded = true
-margin_top = 24.0
-margin_right = 12.0
-margin_bottom = 44.0
-flat = true
+[node name="NewGame" parent="VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 317.0
+margin_right = 1080.0
+margin_bottom = 448.0
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/Options"]
-margin_right = 87.0
-margin_bottom = 16.0
-custom_fonts/font = ExtResource( 2 )
+[node name="NewGame2" parent="VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 452.0
+margin_right = 1080.0
+margin_bottom = 583.0
+
+[node name="Label" parent="VBoxContainer/NewGame2" index="0"]
 text = "Options"
-align = 2
 
-[node name="Exit" type="Button" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-editor/display_folded = true
-margin_top = 48.0
-margin_right = 12.0
-margin_bottom = 68.0
-flat = true
+[node name="NewGame3" parent="VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 587.0
+margin_right = 1080.0
+margin_bottom = 720.0
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/Exit"]
-margin_right = 85.0
-margin_bottom = 16.0
-custom_fonts/font = ExtResource( 2 )
+[node name="Label" parent="VBoxContainer/NewGame3" index="0"]
 text = "Exit"
-align = 2
+
+[editable path="VBoxContainer/NewGame2"]
+
+[editable path="VBoxContainer/NewGame3"]

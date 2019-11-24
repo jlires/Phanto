@@ -3,6 +3,6 @@
 [ext_resource path="res://Ghost Shadow.ttf" type="DynamicFontData" id=1]
 
 [resource]
-size = 20
-extra_spacing_top = 20
+size = 100
+extra_spacing_top = 100
 font_data = ExtResource( 1 )
