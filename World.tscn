@@ -1,7 +1,7 @@
 [gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemies.gd" type="Script" id=2]
+[ext_resource path="res://Enemies.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Sprites/cavesofgallet_tiles.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/microFantasy.v0.4/tilesets/platformer.png" type="Texture" id=4]
 
@@ -1117,11 +1117,13 @@ points = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
 [node name="World" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 72, 72 )
+position = Vector2( 72.4272, 72 )
 z_index = 100
 
-[node name="Enemies" type="KinematicBody2D" parent="."]
-script = ExtResource( 2 )
+[node name="Enemies" parent="." instance=ExtResource( 2 )]
+position = Vector2( 101.29, 72.0002 )
+z_index = 1
+z_as_relative = false
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 visible = false

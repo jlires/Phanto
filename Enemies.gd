@@ -13,17 +13,17 @@ var face = "right"
 
 signal move
 
-onready var player = get_node("res://Player.tscn")
+onready var player = get_node("../Player")
 
 func pos():
 	return self.position + Vector2(-10, -10)
 	
 	
 func ia():
-	if abs(player.position.x - position.x) < 10:
-		if player.position.x > position.x:
+	if abs(player.position.x - self.position.x) < 20:
+		if player.position.x > self.position.x:
 			return "right"
-		elif player.position.x < position.x:
+		elif player.position.x < self.position.x:
 			return "left"
 	return "idle"
 
