@@ -10,6 +10,7 @@ var motion = Vector2()
 var is_moving = false
 var friction = false
 var face = "right"
+var flashlight = true
 
 signal move
 
@@ -61,6 +62,14 @@ func _physics_process(delta):
 		is_moving = false
 		$Animation.play("Idle")
 		friction = true
+		
+	if Input.is_action_just_pressed("ui_flashlight"):
+		if flashlight:
+			$Flashlight.hide()
+			flashlight = false
+		else:
+			$Flashlight.show()
+			flashlight = true
 		
 	if is_on_floor():
 		if Input.is_action_just_pressed("ui_up"):

@@ -1,0 +1,8 @@
+[gd_scene format=2]
+
+[node name="Darkness" type="Polygon2D"]
+modulate = Color( 0.0392157, 0.0352941, 0.0352941, 1 )
+show_behind_parent = true
+position = Vector2( -8, -8 )
+scale = Vector2( 2.75, 3.8 )
+polygon = PoolVector2Array( 0, 0, 0, 40, 96, 40, 96, 0, 0, 0 )

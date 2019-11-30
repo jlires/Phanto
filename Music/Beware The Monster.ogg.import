@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Beware The Monster.ogg-4d520d18bdfe1dcd6f5e91caef68aa77.oggstr"
+
+[deps]
+
+source_file="res://Music/Beware The Monster.ogg"
+dest_files=[ "res://.import/Beware The Monster.ogg-4d520d18bdfe1dcd6f5e91caef68aa77.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

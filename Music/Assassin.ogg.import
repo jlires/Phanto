@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Assassin.ogg-3c2250ad2815d32cbc1264be523b56c6.oggstr"
+
+[deps]
+
+source_file="res://Music/Assassin.ogg"
+dest_files=[ "res://.import/Assassin.ogg-3c2250ad2815d32cbc1264be523b56c6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

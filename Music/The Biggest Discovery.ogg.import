@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/The Biggest Discovery.ogg-b6f4421ea218a5db524eb745d1ec9b9c.oggstr"
+
+[deps]
+
+source_file="res://Music/The Biggest Discovery.ogg"
+dest_files=[ "res://.import/The Biggest Discovery.ogg-b6f4421ea218a5db524eb745d1ec9b9c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
