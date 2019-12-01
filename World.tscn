@@ -1,17 +1,20 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemies.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Darkness.tscn" type="PackedScene" id=3]
-[ext_resource path="res://DungeonTilesSet.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Sprites/cavesofgallet_tiles.png" type="Texture" id=5]
+[ext_resource path="res://World.gd" type="Script" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemies.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Darkness.tscn" type="PackedScene" id=4]
+[ext_resource path="res://DungeonTilesSet.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sprites/cavesofgallet_tiles.png" type="Texture" id=6]
+[ext_resource path="res://Light Charge.gd" type="Script" id=7]
+[ext_resource path="res://Sprites/microFantasy.v0.4/items/flag_yellow.png" type="Texture" id=8]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 light_mode = 2
 
 [sub_resource type="TileSet" id=2]
 0/name = "cavesofgallet_tiles.png 0"
-0/texture = ExtResource( 5 )
+0/texture = ExtResource( 6 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 48, 40, 8, 8 )
@@ -21,7 +24,7 @@ light_mode = 2
 0/shapes = [  ]
 0/z_index = 0
 1/name = "cavesofgallet_tiles.png 1"
-1/texture = ExtResource( 5 )
+1/texture = ExtResource( 6 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 48, 48, 8, 8 )
@@ -31,7 +34,7 @@ light_mode = 2
 1/shapes = [  ]
 1/z_index = 0
 2/name = "cavesofgallet_tiles.png 2"
-2/texture = ExtResource( 5 )
+2/texture = ExtResource( 6 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 56, 40, 8, 8 )
@@ -41,7 +44,7 @@ light_mode = 2
 2/shapes = [  ]
 2/z_index = 0
 3/name = "cavesofgallet_tiles.png 3"
-3/texture = ExtResource( 5 )
+3/texture = ExtResource( 6 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 56, 48, 8, 8 )
@@ -52,28 +55,45 @@ light_mode = 2
 3/z_index = 0
 
 [node name="World" type="Node2D"]
+script = ExtResource( 1 )
 
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 72.4272, 72 )
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 72.4272, 73.2291 )
 z_index = 100
 
-[node name="Enemies" parent="." instance=ExtResource( 2 )]
+[node name="Enemies" parent="." instance=ExtResource( 3 )]
 position = Vector2( 101.29, 72.0002 )
 z_index = 1
 z_as_relative = false
 
-[node name="Darkness" parent="." instance=ExtResource( 3 )]
+[node name="Darkness" parent="." instance=ExtResource( 4 )]
+position = Vector2( -20.8889, 201.333 )
 
 [node name="Node2D" type="Node2D" parent="."]
+editor/display_folded = true
 modulate = Color( 0.0392157, 0.0352941, 0.0352941, 1 )
 
 [node name="Dungeon" type="Node2D" parent="Node2D"]
 material = SubResource( 1 )
 
-[node name="DungeonTilesSet" parent="Node2D/Dungeon" instance=ExtResource( 4 )]
+[node name="DungeonTilesSet" parent="Node2D/Dungeon" instance=ExtResource( 5 )]
 
 [node name="Ladder" type="TileMap" parent="Node2D/Dungeon"]
 tile_set = SubResource( 2 )
 cell_size = Vector2( 8, 8 )
 format = 1
 tile_data = PoolIntArray( 393227, 536870912, 0, 458763, 536870913, 0, 524299, 536870913, 0, 589835, 536870913, 0 )
+
+[node name="Light Charge" type="Area2D" parent="."]
+position = Vector2( 65.1742, 72.428 )
+script = ExtResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="Light Charge"]
+position = Vector2( 0, 2.1509 )
+scale = Vector2( 1, 0.692729 )
+texture = ExtResource( 8 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Light Charge"]
+position = Vector2( -0.0438935, 2.45817 )
+scale = Vector2( 0.568879, 0.600235 )
+polygon = PoolVector2Array( 3.5, 7, -3.5, 7, -3.41412, -6.98539, 3.5, -7 )

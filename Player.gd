@@ -10,9 +10,26 @@ var motion = Vector2()
 var is_moving = false
 var friction = false
 var face = "right"
-var flashlight = true
+var flashlight = false
+# Variable con estado inicial de la linterna
+var light_load = 200
 
 signal move
+signal light_battery(battery)
+
+# Funcion que disminuye la carga de linterna cuando se prende
+func light_on():
+	if light_load == 0:
+		hide_light()
+	else: 
+		light_load -= 1
+	emit_signal("light_battery", light_load)
+
+
+func charge_light():
+	light_load += 0.5
+	emit_signal("light_battery", light_load)
+
 
 func pos():
 	return self.position + Vector2(-10, -10)
@@ -24,6 +41,16 @@ func flip_face(dir):
 	elif dir == "left":
 		$Sprite.flip_h = true
 	return dir
+
+
+func hide_light():
+	$Flashlight.hide()
+	flashlight = false
+
+
+func show_light():
+	$Flashlight.show()
+	flashlight = true
 
 
 func _physics_process(delta):
@@ -64,12 +91,10 @@ func _physics_process(delta):
 		friction = true
 		
 	if Input.is_action_just_pressed("ui_flashlight"):
-		if flashlight:
-			$Flashlight.hide()
-			flashlight = false
+		if !flashlight and light_load > 0:
+			show_light()
 		else:
-			$Flashlight.show()
-			flashlight = true
+			hide_light()
 		
 	if is_on_floor():
 		if Input.is_action_just_pressed("ui_up"):
@@ -87,3 +112,6 @@ func _physics_process(delta):
 	
 	if is_moving:
 		emit_signal("move")
+	if flashlight:
+		light_on()
+		
