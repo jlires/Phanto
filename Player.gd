@@ -3,7 +3,7 @@ extends KinematicBody2D
 const UP = Vector2(0,-1)
 const GRAVITY = 20
 const ACCELERATION = 10
-const MAX_SPEED = 50
+const MAX_SPEED = 30
 const JUMP_HEIGHT = -200
 
 var motion = Vector2()
@@ -16,12 +16,13 @@ var light_load = 200
 
 signal move
 signal light_battery(battery)
+signal idle
 
 # Funcion que disminuye la carga de linterna cuando se prende
 func light_on():
 	if light_load == 0:
 		hide_light()
-	else: 
+	else:
 		light_load -= 1
 	emit_signal("light_battery", light_load)
 
@@ -29,20 +30,7 @@ func light_on():
 func charge_light():
 	light_load += 0.5
 	emit_signal("light_battery", light_load)
-
-
-func pos():
-	return self.position + Vector2(-10, -10)
-
-
-func flip_face(dir):
-	if dir == "right":
-		$Sprite.flip_h = false
-	elif dir == "left":
-		$Sprite.flip_h = true
-	return dir
-
-
+	
 func hide_light():
 	$Flashlight.hide()
 	flashlight = false
@@ -52,6 +40,15 @@ func show_light():
 	$Flashlight.show()
 	flashlight = true
 
+func pos():
+	return self.position + Vector2(-10, -10)
+
+func flip_face(dir):
+	if dir == "right":
+		$Sprite.flip_h = false
+	elif dir == "left":
+		$Sprite.flip_h = true
+	return dir
 
 func _physics_process(delta):
 	motion.y += GRAVITY
@@ -95,6 +92,11 @@ func _physics_process(delta):
 			show_light()
 		else:
 			hide_light()
+			
+	if is_moving:
+		emit_signal("move")
+	else:
+		emit_signal("idle")
 		
 	if is_on_floor():
 		if Input.is_action_just_pressed("ui_up"):
@@ -109,9 +111,5 @@ func _physics_process(delta):
 			
 	motion = move_and_slide(motion, UP)
 	
-	
-	if is_moving:
-		emit_signal("move")
 	if flashlight:
 		light_on()
-		
