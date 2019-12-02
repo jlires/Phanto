@@ -1,7 +1,6 @@
 extends Node2D
 
 func _ready():
-	$Player/Flashlight.hide()
 	pass # Replace with function body.
 	
 	
@@ -12,6 +11,4 @@ func _input(event):
 			if body.name == "Player" and not $Door.open:
 				$Door.open()
 				print("Next Level")
-				yield(get_tree().create_timer(2), "timeout")
-				Global.goto_scene("res://Level 2.tscn")
-
+				
