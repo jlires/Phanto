@@ -30,5 +30,5 @@ margin_top = -52.0
 margin_right = 275.0
 margin_bottom = 52.0
 custom_fonts/font = ExtResource( 1 )
-text = "New Game"
+text = "Instructions"
 align = 1
