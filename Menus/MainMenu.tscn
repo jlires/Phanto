@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Menus/MainMenu.gd" type="Script" id=1]
-[ext_resource path="res://PhantoFont.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Menus/NewGameButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Fonts/PhantoFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Menus/NewGameButton2.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Menus/InstructionsButton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Menus/QuitButton.tscn" type="PackedScene" id=5]
 
@@ -36,6 +36,8 @@ margin_bottom = 241.0
 size_flags_horizontal = 15
 size_flags_vertical = 15
 custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "PHANTO"
 align = 1
 valign = 1
@@ -61,7 +63,7 @@ margin_top = 299.0
 margin_right = 1080.0
 margin_bottom = 313.0
 
-[node name="PlayGame" parent="VBoxContainer" instance=ExtResource( 3 )]
+[node name="NewGame" parent="VBoxContainer" instance=ExtResource( 3 )]
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -70,6 +72,7 @@ margin_left = 0.0
 margin_top = 317.0
 margin_right = 1080.0
 margin_bottom = 448.0
+mouse_default_cursor_shape = 2
 
 [node name="Instructions" parent="VBoxContainer" instance=ExtResource( 4 )]
 anchor_left = 0.0
@@ -80,6 +83,7 @@ margin_left = 0.0
 margin_top = 452.0
 margin_right = 1080.0
 margin_bottom = 583.0
+mouse_default_cursor_shape = 2
 
 [node name="Quit" parent="VBoxContainer" instance=ExtResource( 5 )]
 anchor_left = 0.0
@@ -90,6 +94,13 @@ margin_left = 0.0
 margin_top = 587.0
 margin_right = 1080.0
 margin_bottom = 720.0
-[connection signal="pressed" from="VBoxContainer/PlayGame" to="." method="_on_PlayGame_pressed"]
+mouse_default_cursor_shape = 2
+[connection signal="mouse_entered" from="VBoxContainer/NewGame" to="." method="_on_NewGame_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/NewGame" to="." method="_on_NewGame_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Instructions" to="." method="_on_Instructions_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/Instructions" to="." method="_on_Instructions_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/Instructions" to="." method="_on_Instructions_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/Quit" to="." method="_on_Quit_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/Quit" to="." method="_on_Quit_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/Quit" to="." method="_on_Quit_pressed"]

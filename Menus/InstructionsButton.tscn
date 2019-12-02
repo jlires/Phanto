@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://LabelsFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Fonts/LabelsFont.tres" type="DynamicFont" id=1]
 
 [node name="NewGame" type="Button"]
 anchor_left = 0.5
@@ -32,3 +32,10 @@ margin_bottom = 52.0
 custom_fonts/font = ExtResource( 1 )
 text = "Instructions"
 align = 1
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+position = Vector2( 100, 15 )
+points = PoolVector2Array( 173.5, 56, 269.5, 40, 341.5, 56, 413.5, 48, 461.5, 48, 525.5, 40, 565.5, 56, 653.5, 48, 685.5, 48, 621.5, 64, 565.5, 40, 493.5, 56, 373.5, 40, 277.5, 56, 173.5, 56 )
+default_color = Color( 1, 1, 1, 1 )
+texture_mode = 1134592000
