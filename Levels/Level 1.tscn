@@ -33,6 +33,7 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="Door" parent="." instance=ExtResource( 6 )]
+visible = true
 modulate = Color( 0.0392157, 0.0352941, 0.0352941, 1 )
 position = Vector2( 48, 344 )
 collision_layer = 2
