@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/microFantasy.v0.4/characters/basic/basic_climb_01.png" type="Texture" id=2]
@@ -25,9 +25,10 @@
 [ext_resource path="res://Sprites/microFantasy.v0.4/characters/basic/basic_jump_08.png" type="Texture" id=23]
 [ext_resource path="res://Sprites/microFantasy.v0.4/characters/basic/basic_jump_09.png" type="Texture" id=24]
 [ext_resource path="res://Sprites/flashlight.png" type="Texture" id=25]
-[ext_resource path="res://Light Bar/ExperienceBar.tscn" type="PackedScene" id=26]
-[ext_resource path="res://Player/SFX.gd" type="Script" id=27]
-[ext_resource path="res://Sound Effects/walk_wood.ogg" type="AudioStream" id=28]
+[ext_resource path="res://Sprites/flashlight_blow.png" type="Texture" id=26]
+[ext_resource path="res://Light Bar/ExperienceBar.tscn" type="PackedScene" id=27]
+[ext_resource path="res://Player/SFX.gd" type="Script" id=28]
+[ext_resource path="res://Sound Effects/walk_wood.ogg" type="AudioStream" id=29]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -45,11 +46,6 @@ animations = [ {
 "loop": true,
 "name": "Idle",
 "speed": 3.0
-}, {
-"frames": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ],
-"loop": true,
-"name": "Jump",
-"speed": 10.0
 }, {
 "frames": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ],
 "loop": true,
@@ -176,6 +172,7 @@ script = ExtResource( 1 )
 modulate = Color( 0.054902, 0.0509804, 0.0509804, 1 )
 frames = SubResource( 1 )
 animation = "Climb"
+frame = 1
 playing = true
 
 [node name="Flashlight" type="Node2D" parent="."]
@@ -193,6 +190,7 @@ shadow_filter = 1
 
 [node name="Glow" type="Light2D" parent="Flashlight"]
 position = Vector2( -0.032175, 0.40418 )
+texture = ExtResource( 26 )
 texture_scale = 0.01
 energy = 5.0
 
@@ -221,7 +219,7 @@ editor_draw_drag_margin = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ExperienceBar" parent="CanvasLayer" instance=ExtResource( 26 )]
+[node name="ExperienceBar" parent="CanvasLayer" instance=ExtResource( 27 )]
 light_mask = 524288
 margin_left = 10.0
 margin_top = -10.0
@@ -229,10 +227,10 @@ margin_right = 936.0
 margin_bottom = 58.778
 
 [node name="SFX" type="Node2D" parent="."]
-script = ExtResource( 27 )
+script = ExtResource( 28 )
 
 [node name="WalkWood" type="AudioStreamPlayer2D" parent="SFX"]
-stream = ExtResource( 28 )
+stream = ExtResource( 29 )
 [connection signal="idle" from="." to="SFX" method="_on_Player_idle"]
 [connection signal="light_battery" from="." to="CanvasLayer/ExperienceBar" method="_on_Player_light_battery"]
 [connection signal="move" from="." to="SFX" method="_on_Player_move"]
