@@ -20,9 +20,7 @@ func _on_Quit_pressed():
 func _on_Instructions_pressed():
 	$SelectSound.play()
 	yield(get_tree().create_timer(0.5), "timeout")
-	# TODO: This function doing the same playgame button
-	pass # Replace with function body.
-	
+	Global.goto_scene("res://Menus/Instructions2.tscn")
 
 
 ## Stylistic hover ##
