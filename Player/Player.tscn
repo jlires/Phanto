@@ -172,7 +172,6 @@ script = ExtResource( 1 )
 modulate = Color( 0.054902, 0.0509804, 0.0509804, 1 )
 frames = SubResource( 1 )
 animation = "Climb"
-frame = 1
 playing = true
 
 [node name="Flashlight" type="Node2D" parent="."]

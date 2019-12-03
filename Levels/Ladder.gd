@@ -15,9 +15,9 @@ func _ready():
 
 func _on_LadderCollision_body_entered(body):
 	if body.name == "Player":
-		get_parent().get_node("Player").set_on_ladder(true)
+		get_parent().get_parent().get_node("Player").set_on_ladder(true)
 
 
 func _on_LadderCollision_body_exited(body):
 	if body.name == "Player":
-		get_parent().get_node("Player").set_on_ladder(false)
+		get_parent().get_parent().get_node("Player").set_on_ladder(false)

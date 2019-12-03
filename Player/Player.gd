@@ -62,7 +62,7 @@ func is_on_ladder():
 func _physics_process(delta):
 	if is_on_floor() or not is_on_ladder():
 		motion.y += GRAVITY
-	friction = false
+	friction = true
 	
 	var m = get_global_mouse_position()
 	var pos = self.pos()
@@ -96,13 +96,11 @@ func _physics_process(delta):
 	if Input.is_action_pressed("ui_right"):
 		is_moving = true
 		motion.x = min(motion.x + ACCELERATION, MAX_SPEED)
-		##$Sprite.flip_h = false
 		$Sprite.set_offset(Vector2(2, -1))
 		$Animation.play("Run")
 	elif Input.is_action_pressed("ui_left"):
 		is_moving = true
 		motion.x = max(motion.x - ACCELERATION, -MAX_SPEED)
-		##$Sprite.flip_h = true
 		$Sprite.set_offset(Vector2(-30, -1))
 		$Animation.play("Run")
 	else:
@@ -117,28 +115,22 @@ func _physics_process(delta):
 	else:
 		emit_signal("idle")
 		
-	## Jump ##
-	if is_on_floor():
-		if Input.is_action_just_pressed("ui_up"):
+	## Jump or Ladder ##
+	if Input.is_action_just_pressed("ui_up"):
+		if is_on_ladder():
+			motion.y = -10
+			$Animation.play("Climb")
+		elif is_on_floor():
 			motion.y = JUMP_HEIGHT
 			$Animation.play("Jump")
-		if friction:
-			motion.x = lerp(motion.x, 0, 0.2)
-	elif not on_ladder:
-		is_moving = true
-		if friction:
-			motion.x = lerp(motion.x, 0, 0.05)
-			
-	if on_ladder:
-		if Input.is_action_just_pressed("ui_up"):
-			print(self.position)
-			self.position += Vector2(0, -0.1)
-			$Animation.play("Climb")
-		elif Input.is_action_just_pressed("ui_down"):
+				
+	if Input.is_action_just_pressed("ui_down"):
+		if is_on_ladder():
 			motion.y = 10
 			$Animation.play("Climb")
-		else:
-			is_moving = false
-			
+	
+	if is_on_floor() and friction:
+			motion.x = lerp(motion.x, 0, 0.1)
+
 	motion = move_and_slide(motion, UP)
 	
