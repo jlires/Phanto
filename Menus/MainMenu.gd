@@ -4,16 +4,21 @@ extends Control
 func _ready():
 	pass # Replace with function body.
 
-
 func _on_NewGame_pressed():
+	$SelectSound.play()
+	yield(get_tree().create_timer(1), "timeout")
 	Global.goto_scene("res://Levels/Level 1.tscn")
 
 
 func _on_Quit_pressed():
+	$SelectSound.play()
+	yield(get_tree().create_timer(1), "timeout")
 	get_tree().quit()
 
 
 func _on_Instructions_pressed():
+	$SelectSound.play()
+	yield(get_tree().create_timer(1), "timeout")
 	# TODO: This function doing the same playgame button
 	pass # Replace with function body.
 	
