@@ -1,0 +1,66 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://Interactive/Lever.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/lever/tile001.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/lever/tile002.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/lever/tile003.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/lever/tile004.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/lever/tile005.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/lever/tile006.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/lever/tile007.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/lever/tile008.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/lever/tile009.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/lever/tile010.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/lever/tile011.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/lever/tile012.png" type="Texture" id=13]
+[ext_resource path="res://Sprites/lever/tile013.png" type="Texture" id=14]
+[ext_resource path="res://Sprites/lever/tile014.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/lever/tile015.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/lever/tile016.png" type="Texture" id=17]
+[ext_resource path="res://Sprites/lever/tile017.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/lever/tile018.png" type="Texture" id=19]
+[ext_resource path="res://Sprites/lever/tile019.png" type="Texture" id=20]
+[ext_resource path="res://Sprites/lever/tile020.png" type="Texture" id=21]
+[ext_resource path="res://Sprites/lever/tile021.png" type="Texture" id=22]
+[ext_resource path="res://Sprites/lever/tile022.png" type="Texture" id=23]
+[ext_resource path="res://Sprites/lever/tile023.png" type="Texture" id=24]
+[ext_resource path="res://Sprites/lever/tile000.png" type="Texture" id=25]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ) ],
+"loop": true,
+"name": "Move",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 24 ) ],
+"loop": true,
+"name": "Finished",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 25 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 4.0
+height = 6.0
+
+[node name="Lever" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -1.69615, 0.308392 )
+rotation = -1.5708
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 1 )
+animation = "Finished"
+speed_scale = 2.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
