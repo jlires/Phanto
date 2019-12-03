@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Menus/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/PhantoFont.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Menus/NewGameButton2.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Menus/InstructionsButton.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Menus/QuitButton.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Sound Effects/menu_select.wav" type="AudioStream" id=6]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -96,9 +95,6 @@ margin_top = 587.0
 margin_right = 1080.0
 margin_bottom = 720.0
 mouse_default_cursor_shape = 2
-
-[node name="SelectSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 6 )
 [connection signal="mouse_entered" from="VBoxContainer/NewGame" to="." method="_on_NewGame_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/NewGame" to="." method="_on_NewGame_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_NewGame_pressed"]
