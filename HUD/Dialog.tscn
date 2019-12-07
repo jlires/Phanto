@@ -1,0 +1,122 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://HUD/DialogBox.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends CanvasLayer
+
+onready var dialog_panel = get_node(\"DialogBox\")
+onready var animation = get_node(\"AnimationPlayer\")
+
+
+signal finished
+
+
+func _ready():
+	pass
+
+
+func start_dialogue(dialogue: Dictionary):
+	animation.play(\"start_dialogue\")
+	dialog_panel.start(dialogue)
+	
+
+
+func finish_dialogue() -> void:
+	animation.play(\"hide_dialogue\")
+	dialog_panel.finish()
+
+
+func _on_DialogBox_finished():
+	finish_dialogue()
+	emit_signal(\"finished\")"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Control
+
+var  finished = false
+onready var dialogue_player = $DialogPlayer
+onready var dialogue_text = $Panel/DialogText
+
+signal finished
+
+func start(dialogue: Dictionary) -> void:
+	\"\"\"
+	Reinitializes UI and asks DialogPlayer to play dialog
+	\"\"\"
+	finished = false
+	dialogue_player.start(dialogue)
+	update_content()
+	grab_focus()
+	show()
+
+
+func _gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"ui_accept\"):
+		if finished:
+			emit_signal(\"finished\")
+		else:
+			dialogue_player.next()
+			update_content()
+
+
+func update_content() -> void:
+	dialogue_text.set_bbcode(dialogue_player.text)
+
+
+func finish() -> void:
+	release_focus()
+	##hide()
+
+
+func _on_DialogPlayer_finished():
+	finished = true
+"
+
+[sub_resource type="Animation" id=3]
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("DialogBox:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 140 ), Vector2( 0, 240 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("DialogBox:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 240 ), Vector2( 0, 140 ) ]
+}
+
+[node name="Dialog" type="CanvasLayer"]
+script = SubResource( 1 )
+
+[node name="DialogBox" parent="." instance=ExtResource( 1 )]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 60.0
+margin_right = 0.0
+margin_bottom = 60.0
+focus_mode = 2
+script = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/hide_dialogue = SubResource( 3 )
+anims/start_dialogue = SubResource( 4 )
+[connection signal="finished" from="DialogBox" to="." method="_on_DialogBox_finished"]

@@ -8,7 +8,7 @@ func _ready():
 func _on_NewGame_pressed():
 	$SelectSound.play()
 	yield(get_tree().create_timer(0.5), "timeout")
-	Global.goto_scene("res://Levels/Level 1.tscn")
+	Global.goto_scene("res://Levels/Level 1/Level 1.tscn")
 
 
 func _on_Quit_pressed():

@@ -1,0 +1,115 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Fonts/DialogFont.tres" type="DynamicFont" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+var  finished = false
+onready var dialogue_player = $DialogPlayer
+onready var dialogue_text = $Panel/DialogText
+
+signal finished
+
+func start(dialogue: Dictionary) -> void:
+	\"\"\"
+	Reinitializes UI and asks DialogPlayer to play dialog
+	\"\"\"
+	finished = false
+	dialogue_player.start(dialogue)
+	update_content()
+	grab_focus()
+	show()
+
+
+func _gui_input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"ui_accept\"):
+		if finished:
+			emit_signal(\"finished\")
+		else:
+			dialogue_player.next()
+			update_content()
+
+
+func update_content() -> void:
+	dialogue_text.set_bbcode(dialogue_player.text)
+
+
+func finish() -> void:
+	release_focus()
+	##hide()
+
+
+func _on_DialogPlayer_finished():
+	finished = true
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Node2D
+
+class_name DialogPlayer
+
+signal finished
+
+var text: String = \"\"
+var _conversation: Array
+var _current_index: int = 0
+
+func start(dialogue_dict):
+	\"\"\"
+	Takes a dictionary of conversation data and stores it in an array
+	\"\"\"
+	_current_index = 0
+	_conversation = dialogue_dict.values()
+	_update()
+
+
+func next():
+	_current_index += 1
+	assert _current_index < _conversation.size()
+	_update()
+
+
+func _update():
+	text = _conversation[_current_index].text
+	if _current_index == _conversation.size()-1:
+		emit_signal(\"finished\")
+"
+
+[node name="DialogBox" type="Control"]
+margin_right = 320.0
+margin_bottom = 40.0
+script = SubResource( 1 )
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 320.0
+margin_bottom = 40.0
+
+[node name="DialogText" type="RichTextLabel" parent="Panel"]
+margin_left = 40.0
+margin_top = 4.0
+margin_right = 280.0
+margin_bottom = 28.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+
+[node name="MenuButton" type="MenuButton" parent="Panel"]
+margin_left = 152.0
+margin_top = -52.0
+margin_right = 208.0
+margin_bottom = -32.0
+
+[node name="NextText" type="RichTextLabel" parent="Panel"]
+margin_left = 256.0
+margin_top = 28.0
+margin_right = 320.0
+margin_bottom = 44.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_text = "[space] Next"
+text = "[space] Next"
+
+[node name="DialogPlayer" type="Node2D" parent="."]
+script = SubResource( 2 )
+[connection signal="finished" from="DialogPlayer" to="." method="_on_DialogPlayer_finished"]
