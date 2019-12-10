@@ -24,7 +24,7 @@ func set_darkness(new_value: bool):
 onready var _charge_bar = $Player/CanvasLayer/ExperienceBar
 
 func _ready():
-	_charge_bar.initialize($Player.light_load, $Player.light_load)
+	_charge_bar.initialize($Player.flashlight.light_load, $Player.flashlight.light_load)
 	$Player/Flashlight.hide()
 
 

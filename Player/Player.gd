@@ -18,32 +18,13 @@ var is_moving = false
 var friction = false
 var face = "right"
 var on_ladder = false
-var flashlight = false
-var light_load = 200
 
-## Flashlight ##
-func light_on():
-	#- Lowers flashlight battery while being used -#
-	if light_load == 0:
-		hide_light()
-	else:
-		light_load -= 1
-	emit_signal("light_battery", light_load)
+onready var flashlight = get_node("Flashlight")
 
-func charge_light():
-	light_load += 0.5
-	emit_signal("light_battery", light_load)
-	
-func hide_light():
-	$Flashlight.hide()
-	flashlight = false
-
-func show_light():
-	$Flashlight.show()
-	flashlight = true
 
 func pos():
 	return self.position + Vector2(-10, -10)
+
 
 func flip_face(dir):
 	if dir == "right":
@@ -51,12 +32,21 @@ func flip_face(dir):
 	elif dir == "left":
 		$Sprite.flip_h = true
 	return dir
-	
+
+
 func set_on_ladder(state):
 	on_ladder = state
-	
+
+
 func is_on_ladder():
 	return on_ladder
+
+
+func is_on_air():
+	if not is_on_floor() and not is_on_ladder():
+		return true
+	return false
+
 
 ## Character Physics and Interaction ## 
 func _physics_process(delta):
@@ -77,19 +67,19 @@ func _physics_process(delta):
 	
 	## Flashlight ##
 	
-	if $Flashlight.get_angle_to(m) > 0.1:
-	    $Flashlight.rotation += aim_speed
-	elif $Flashlight.get_angle_to(m) < -0.1:
-	    $Flashlight.rotation -= aim_speed
+	if flashlight.get_angle_to(m) > 0.1:
+	    flashlight.rotation += aim_speed
+	elif flashlight.get_angle_to(m) < -0.1:
+	    flashlight.rotation -= aim_speed
 		
 	if Input.is_action_just_pressed("ui_flashlight"):
-		if !flashlight and light_load > 0:
-			show_light()
+		if !flashlight.state and flashlight.light_load > 0:
+			flashlight.show_light()
 		else:
-			hide_light()
+			flashlight.hide_light()
 			
-	if flashlight:
-		light_on()
+	if flashlight.state:
+		flashlight.light_on()
 	
 	## Movement Left-Right ##
 	
@@ -105,7 +95,6 @@ func _physics_process(delta):
 		$Animation.play("Run")
 	else:
 		is_moving = false
-		$Animation.play("Idle")
 		friction = true
 
 	## Movement Up-Down ##
@@ -114,7 +103,7 @@ func _physics_process(delta):
 		emit_signal("move")
 	else:
 		emit_signal("idle")
-		
+	
 	## Jump or Ladder ##
 	if Input.is_action_just_pressed("ui_up"):
 		if is_on_ladder():
@@ -122,15 +111,23 @@ func _physics_process(delta):
 			$Animation.play("Climb")
 		elif is_on_floor():
 			motion.y = JUMP_HEIGHT
-			$Animation.play("Jump")
-				
-	if Input.is_action_just_pressed("ui_down"):
+	elif Input.is_action_just_pressed("ui_down"):
 		if is_on_ladder():
 			motion.y = 10
 			$Animation.play("Climb")
 	
 	if is_on_floor() and friction:
-			motion.x = lerp(motion.x, 0, 0.1)
+		motion.x = lerp(motion.x, 0, 0.1)
+	
+	if not is_moving:
+		$Animation.play("Idle")
+	
+	if is_on_ladder() and not is_on_floor():
+		$Animation.play("Climb")
+		print($Animation.is_playing())
+	
+	if is_on_air():
+		$Animation.play("Jump")
 
 	motion = move_and_slide(motion, UP)
-	
+

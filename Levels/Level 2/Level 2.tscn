@@ -55,7 +55,7 @@ func _input(event):
 				
 "
 
-[sub_resource type="GDScript" id=4]
+[sub_resource type="GDScript" id=2]
 script/source = "extends Node2D
 
 # Declare member variables here. Examples:
@@ -81,7 +81,7 @@ func _on_LadderCollision_body_exited(body):
 		get_parent().get_parent().get_node(\"Player\").set_on_ladder(false)
 "
 
-[sub_resource type="TileSet" id=2]
+[sub_resource type="TileSet" id=3]
 0/name = "cavesofgallet_tiles.png 0"
 0/texture = ExtResource( 5 )
 0/tex_offset = Vector2( 0, 0 )
@@ -133,7 +133,7 @@ func _on_LadderCollision_body_exited(body):
 4/shapes = [  ]
 4/z_index = 0
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 3.14937, 16.6095 )
 
 [sub_resource type="GDScript" id=5]
@@ -178,10 +178,10 @@ position = Vector2( 89.9176, 144.663 )
 rotation = -3.14159
 
 [node name="Ladder" type="Node2D" parent="Map"]
-script = SubResource( 4 )
+script = SubResource( 2 )
 
 [node name="Ladder" type="TileMap" parent="Map/Ladder"]
-tile_set = SubResource( 2 )
+tile_set = SubResource( 3 )
 cell_size = Vector2( 8, 8 )
 format = 1
 tile_data = PoolIntArray( 917547, 536870913, 0, 983083, 536870912, 0, 1048619, 536870912, 0, 1114155, 536870912, 0, 1179691, 536870912, 0, 1245208, 1, 0, 1310744, 0, 0, 1376280, 0, 0, 1441816, 0, 0, 1507352, 0, 0 )
@@ -190,11 +190,11 @@ tile_data = PoolIntArray( 917547, 536870913, 0, 983083, 536870912, 0, 1048619, 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Ladder/LadderCollision"]
 position = Vector2( 196.083, 174.481 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Map/Ladder/LadderCollision"]
 position = Vector2( 347.634, 135.012 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="StoneObstacle" type="Node2D" parent="Map"]
 script = SubResource( 5 )

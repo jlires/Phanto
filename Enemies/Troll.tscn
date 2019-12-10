@@ -1,0 +1,161 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Sprites/microFantasy.v0.4/characters/troll/troll_run_01.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/microFantasy.v0.4/characters/troll/troll_run_02.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/microFantasy.v0.4/characters/troll/troll_run_03.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/microFantasy.v0.4/characters/troll/troll_run_04.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/microFantasy.v0.4/characters/troll/troll_idle_01.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/microFantasy.v0.4/characters/troll/troll_idle_02.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/microFantasy.v0.4/characters/troll/troll_idle_03.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/microFantasy.v0.4/characters/troll/troll_idle_04.png" type="Texture" id=8]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody2D
+
+const UP = Vector2(0,-1)
+const GRAVITY = 20
+const ACCELERATION = 10
+const MAX_SPEED = 20
+const JUMP_HEIGHT = -200
+const VISION = 80
+
+var motion = Vector2()
+var is_moving = false
+var friction = false
+var face = \"right\"
+
+var detected = false
+
+signal move
+
+onready var player = get_parent().get_parent().get_node(\"Player\")
+
+func pos():
+	return self.position
+
+
+func ia():
+	if not detected:
+		if abs(player.position.x - self.position.x) < VISION:
+			if player.position.x > self.position.x:
+				return \"right\"
+			elif player.position.x < self.position.x:
+				return \"left\"
+	else:
+		if abs(player.position.x - self.position.x) < VISION*2.5:
+			if player.position.x > self.position.x:
+				return \"left\"
+			elif player.position.x < self.position.x:
+				return \"right\"
+	return \"idle\"
+
+
+func flip_face(dir):
+	if dir == \"right\":
+		$Sprite.flip_h = false
+	elif dir == \"left\":
+		$Sprite.flip_h = true
+	return dir
+
+
+func _physics_process(delta):
+	motion.y += GRAVITY
+	friction = false
+
+	var pos = self.pos()
+	var aim_speed = deg2rad(10)
+
+	var ia_res = ia()
+	if ia_res == \"right\":
+		is_moving = true
+		motion.x = min(motion.x + ACCELERATION, MAX_SPEED)
+		$Sprite.flip_h = false
+		$Sprite.play(\"Run\")
+	elif ia_res == \"left\":
+		is_moving = true
+		motion.x = max(motion.x - ACCELERATION, -MAX_SPEED)
+		$Sprite.flip_h = true
+		$Sprite.play(\"Run\")
+	elif ia_res == \"idle\":
+		is_moving = false
+		$Sprite.play(\"Idle\")
+		friction = true
+
+	if is_moving:
+		motion = move_and_slide(motion, UP)
+		emit_signal(\"move\")
+
+
+func _on_Area2D_area_entered(area):
+	if area.name == \"FlashlightArea\":
+		detected = true
+
+
+func _on_Area2D_area_exited(area):
+	if area.name == \"FlashlightArea\":
+		detected = false
+"
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "Run",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 3.0
+} ]
+
+[sub_resource type="Animation" id=2]
+loop = true
+
+[sub_resource type="Animation" id=3]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "Run" ]
+}
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 5.0
+height = 5.0
+
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 4.0
+height = 4.0
+
+[node name="Troll" type="KinematicBody2D"]
+modulate = Color( 0.0392157, 0.0352941, 0.0352941, 1 )
+script = SubResource( 1 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 4 )
+animation = "Idle"
+
+[node name="Animation" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
+anims/Idle = SubResource( 2 )
+anims/Run = SubResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -0.7, 1 )
+shape = SubResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.7, 1 )
+shape = SubResource( 5 )
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
