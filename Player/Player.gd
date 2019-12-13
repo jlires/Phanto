@@ -20,6 +20,34 @@ var face = "right"
 var on_ladder = false
 
 onready var flashlight = get_node("Flashlight")
+var light_load = 200
+var state = false
+
+
+
+
+func light_on():
+	#- Lowers flashlight battery while being used -#
+	if light_load == 0:
+		hide_light()
+	else:
+		light_load -= 1
+	emit_signal("light_battery", light_load)
+
+
+func charge_light():
+	light_load += 0.5
+	emit_signal("light_battery", light_load)
+
+
+func hide_light():
+	$Flashlight.hide()
+	state = false
+
+
+func show_light():
+	$Flashlight.show()
+	state = true
 
 
 func pos():
@@ -73,13 +101,13 @@ func _physics_process(delta):
 	    flashlight.rotation -= aim_speed
 		
 	if Input.is_action_just_pressed("ui_flashlight"):
-		if !flashlight.state and flashlight.light_load > 0:
-			flashlight.show_light()
+		if !state and light_load > 0:
+			show_light()
 		else:
-			flashlight.hide_light()
+			hide_light()
 			
-	if flashlight.state:
-		flashlight.light_on()
+	if state:
+		light_on()
 	
 	## Movement Left-Right ##
 	

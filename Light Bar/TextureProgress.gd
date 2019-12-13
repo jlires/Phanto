@@ -17,3 +17,7 @@ func animate_value(end, tween_duration=0.6):
 func _on_Player_light_battery(battery):
 	value = battery
 	yield(animate_value(battery), "completed")
+
+func _on_StatusBar_light_battery_canvas(battery):
+	value = battery
+	yield(animate_value(battery), "completed")

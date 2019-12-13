@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Darkness.tscn" type="PackedScene" id=2]
@@ -7,12 +7,15 @@
 [ext_resource path="res://Sprites/cavesofgallet_tiles.png" type="Texture" id=5]
 [ext_resource path="res://Sound Effects/stone_door_move.wav" type="AudioStream" id=6]
 [ext_resource path="res://Objects/Door.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Player/LightPoint.tscn" type="PackedScene" id=8]
 
 [sub_resource type="GDScript" id=1]
 script/source = "tool
 extends Node2D
 
 export var darkness := true setget set_darkness
+
+onready var _charge_bar = $Player/StatusBar/ExperienceBar
 
 func set_darkness(new_value: bool):
 	darkness = new_value
@@ -25,7 +28,8 @@ func set_darkness(new_value: bool):
 	
 
 func _ready():
-	pass # Replace with function body.
+	_charge_bar.initialize($Player.flashlight.light_load, $Player.flashlight.light_load)
+	$Player/Flashlight.hide()
 	
 	
 func _input(event):
@@ -220,5 +224,11 @@ collision_mask = 2
 position = Vector2( 113.281, 184.133 )
 collision_layer = 2
 collision_mask = 2
+
+[node name="LightPoint" parent="." instance=ExtResource( 8 )]
+position = Vector2( 256, 146.831 )
+
+[node name="LightPoint2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 121.679, 146.173 )
 [connection signal="body_entered" from="Map/Ladder/LadderCollision" to="Map/Ladder" method="_on_LadderCollision_body_entered"]
 [connection signal="body_exited" from="Map/Ladder/LadderCollision" to="Map/Ladder" method="_on_LadderCollision_body_exited"]
